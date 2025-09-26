@@ -7,7 +7,7 @@ import jakarta.persistence.*
 data class Query(
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    val id: Long,
+    val id: Long?,
 
     @Column(name = "query")
     val queryStr: String
