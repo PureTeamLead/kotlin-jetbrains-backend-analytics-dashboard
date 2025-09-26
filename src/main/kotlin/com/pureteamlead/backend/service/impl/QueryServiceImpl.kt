@@ -18,6 +18,6 @@ class QueryServiceImpl(val queryRepo: QueryRepository) : QueryService {
     }
 
     override fun execute(id: Long): List<Array<Any>> {
-
+        return emptyList()
     }
 }
