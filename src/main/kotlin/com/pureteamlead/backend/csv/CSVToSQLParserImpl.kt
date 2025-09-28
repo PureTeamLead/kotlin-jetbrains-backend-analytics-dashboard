@@ -2,19 +2,20 @@ package com.pureteamlead.backend.csv
 
 import com.github.doyaaaaaken.kotlincsv.dsl.csvReader
 import com.pureteamlead.backend.database.DatabaseConn
-import org.springframework.stereotype.Component
+import com.pureteamlead.backend.errors.DatabaseException
 import java.sql.SQLException
 import java.sql.SQLTimeoutException
 
 class CSVToSQLParserImpl(private val dbName: String, private val tableName: String) : CSVToSQLParser {
 
+    @Throws(DatabaseException::class)
     override fun convert(filepath: String, db: DatabaseConn) {
         csvReader().open(filepath) {
             val rawHeaders: List<String>? = readAllAsSequence().firstOrNull()
             val dbColumnsCount = rawHeaders!!.size
 
             if (dbColumnsCount == 0) {
-                print("Zero columns")
+                println("Zero columns")
                 return@open
             }
 
@@ -41,10 +42,10 @@ class CSVToSQLParserImpl(private val dbName: String, private val tableName: Stri
                             preparedInsertStmt.setObject(index+1, e)
                         }
 
-                        println(preparedInsertStmt)
+//                        println(preparedInsertStmt)
                         val rowModified = preparedInsertStmt.executeUpdate()
                         if (rowModified != 1) {
-                            print("Modified wrong number of rows: $rowModified")
+                            println("Modified wrong number of rows: $rowModified")
                         }
                     }
 
@@ -53,7 +54,7 @@ class CSVToSQLParserImpl(private val dbName: String, private val tableName: Stri
             } catch(e: Exception) {
                 when (e) {
                     is SQLTimeoutException, is SQLException -> {
-                        print("Failed to work with database: ${e.printStackTrace()}")
+                        throw DatabaseException("Failed to work with database: ${e.printStackTrace()}")
                     }
                     else -> throw e
                 }

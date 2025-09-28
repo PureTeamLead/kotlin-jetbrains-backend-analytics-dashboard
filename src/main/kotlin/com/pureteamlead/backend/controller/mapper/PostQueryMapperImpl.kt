@@ -8,6 +8,6 @@ import org.springframework.stereotype.Component
 class PostQueryMapperImpl : PostQueryMapper {
     override fun fromPostReqToQuery(req: PostQueryRequest) = Query(
         id = null,
-        queryStr = req.query
+        query = req.query
     )
 }
