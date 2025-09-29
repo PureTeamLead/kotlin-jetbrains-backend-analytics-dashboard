@@ -9,8 +9,10 @@ import java.sql.SQLTimeoutException
 class CSVToSQLParserImpl(private val dbName: String, private val tableName: String) : CSVToSQLParser {
 
     @Throws(DatabaseException::class)
-    override fun convert(filepath: String, db: DatabaseConn) {
-        csvReader().open(filepath) {
+    override fun convert(filename: String, db: DatabaseConn) {
+        val inputStream = this::class.java.classLoader.getResourceAsStream(filename)
+
+        csvReader().open(inputStream!!) {
             val rawHeaders: List<String>? = readAllAsSequence().firstOrNull()
             val dbColumnsCount = rawHeaders!!.size
 
@@ -41,8 +43,7 @@ class CSVToSQLParserImpl(private val dbName: String, private val tableName: Stri
 
                             preparedInsertStmt.setObject(index+1, e)
                         }
-
-                        println(preparedInsertStmt)
+                        
                         val rowModified = preparedInsertStmt.executeUpdate()
                         if (rowModified != 1) {
                             println("Modified wrong number of rows: $rowModified")

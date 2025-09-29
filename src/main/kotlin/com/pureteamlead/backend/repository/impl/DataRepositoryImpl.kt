@@ -17,7 +17,7 @@ class DataRepositoryImpl(
     private val db: DatabaseConn,
     @Value("\${db.name}") private val dbName: String,
     @Value("\${db.table.name}") private val tableName: String,
-    @Value("\${csv.filepath}") private val csvFilePath: String
+    @Value("\${csv.filename}") private val filename: String
 ) : DataRepository {
 
     @PostConstruct
@@ -25,7 +25,7 @@ class DataRepositoryImpl(
         println("setup started")
         val parser: CSVToSQLParser = CSVToSQLParserImpl(dbName, tableName)
         try {
-            parser.convert(csvFilePath, db)
+            parser.convert(filename, db)
         } catch (e: DatabaseException) {
             println("Failed csv file converting: ${e.message}")
             exitProcess(1)
@@ -48,6 +48,7 @@ class DataRepositoryImpl(
         val result: MutableList<List<String>> = mutableListOf()
 
         while (rs.next()) {
+            // Non-production ready, performance is really poor here. Should somehow reuse columns variable, not recreate
             val columns = metaData.getColumns(null, null, tableName, null)
             val row: MutableList<String> = mutableListOf()
             var i = 1
@@ -55,7 +56,6 @@ class DataRepositoryImpl(
                 row.addLast(rs.getString(i))
                 i++
             }
-            println(row)
             result.addLast(row)
         }
 

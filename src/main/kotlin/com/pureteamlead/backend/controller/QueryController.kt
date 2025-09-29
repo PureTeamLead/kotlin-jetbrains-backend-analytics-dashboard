@@ -58,6 +58,7 @@ class QueryController(private val queryService: QueryService, private val queryM
 
     @GetMapping("/execute")
     fun executeQuery(@RequestParam(name = "query") queryID: Long): ResponseEntity<List<List<String>>> {
+//        TODO: implement pagination for large datasets
         val result: List<List<String>>
 
         try {

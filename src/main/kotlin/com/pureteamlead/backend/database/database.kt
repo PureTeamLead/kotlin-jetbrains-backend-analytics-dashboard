@@ -10,6 +10,7 @@ object DatabaseConnection : DatabaseConn {
         val conn = DriverManager.getConnection("jdbc:h2:mem:$dbName;DB_CLOSE_DELAY=-1")
 
         // to guarantee that queries wouldn't modify the data in database
+        // gives a bit performance, since database will not be updated
         conn.isReadOnly = true
         return conn
     }
