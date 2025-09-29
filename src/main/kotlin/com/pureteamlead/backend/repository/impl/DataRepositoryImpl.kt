@@ -35,13 +35,30 @@ class DataRepositoryImpl(
     }
 
     @Throws(SQLException::class, SQLTimeoutException::class)
-    override fun executeQuery(query: String): Any {
+    override fun executeQuery(query: String): List<List<String>> {
         val conn = db.getConnection(dbName)
+        val metaData = conn.metaData
 
         val stmt = conn.prepareStatement(conn.nativeSQL(query))
+        val tableName = stmt.metaData.getTableName(1)
 
-        val result = stmt.executeQuery()
+        val rs = stmt.executeQuery()
         conn.commit()
+
+        val result: MutableList<List<String>> = mutableListOf()
+
+        while (rs.next()) {
+            val columns = metaData.getColumns(null, null, tableName, null)
+            val row: MutableList<String> = mutableListOf()
+            var i = 1
+            while (columns.next()) {
+                row.addLast(rs.getString(i))
+                i++
+            }
+            println(row)
+            result.addLast(row)
+        }
+
         return result
     }
 }

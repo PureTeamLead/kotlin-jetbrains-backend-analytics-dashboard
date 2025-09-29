@@ -42,11 +42,12 @@ class CSVToSQLParserImpl(private val dbName: String, private val tableName: Stri
                             preparedInsertStmt.setObject(index+1, e)
                         }
 
-//                        println(preparedInsertStmt)
+                        println(preparedInsertStmt)
                         val rowModified = preparedInsertStmt.executeUpdate()
                         if (rowModified != 1) {
                             println("Modified wrong number of rows: $rowModified")
                         }
+                        preparedInsertStmt.clearParameters()
                     }
 
                     it.commit()

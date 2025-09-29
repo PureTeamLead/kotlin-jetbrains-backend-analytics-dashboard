@@ -5,5 +5,5 @@ import com.pureteamlead.backend.entity.Query
 interface QueryService {
     fun create(query: Query): Long
     fun getAll(): List<Query>
-    fun execute(id: Long): Any
+    fun execute(id: Long): List<List<String>>
 }

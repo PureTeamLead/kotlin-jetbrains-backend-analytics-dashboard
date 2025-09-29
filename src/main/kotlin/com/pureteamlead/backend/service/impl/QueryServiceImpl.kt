@@ -29,7 +29,7 @@ class QueryServiceImpl(val queryRepo: QueryRepository, val dataRepo: DataReposit
     }
 
     @Throws(NoSuchElementException::class)
-    override fun execute(id: Long): Any {
+    override fun execute(id: Long): List<List<String>> {
         val query = queryRepo.findById(id).orElseThrow()
         val result: Any
 

@@ -57,8 +57,8 @@ class QueryController(private val queryService: QueryService, private val queryM
     }
 
     @GetMapping("/execute")
-    fun executeQuery(@RequestParam(name = "query") queryID: Long): ResponseEntity<Any> {
-        val result: Any
+    fun executeQuery(@RequestParam(name = "query") queryID: Long): ResponseEntity<List<List<String>>> {
+        val result: List<List<String>>
 
         try {
             result = queryService.execute(queryID)
