@@ -1,5 +1,5 @@
 package com.pureteamlead.backend.errors
 
-class DatabaseException(message: String) : Exception() {
+class DatabaseException(override val message: String) : Exception() {
 
 }

@@ -1,8 +1,16 @@
+FROM gradle:8.10-jdk21 AS builder
+
+WORKDIR /app
+
+COPY . .
+
+RUN gradle clean build --no-daemon
+
 FROM openjdk:21-jdk-slim
 
 WORKDIR /app
 
-COPY build/libs/Analytics-Backend-1.0-SNAPSHOT.jar app.jar
+COPY --from=builder /app/build/libs/*.jar app.jar
 
 EXPOSE 8089
 

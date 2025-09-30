@@ -26,7 +26,7 @@ class CSVToSQLParserImpl(private val dbName: String, private val tableName: Stri
 
             // Working with Database
             try {
-                db.getConnection(dbName).use {
+                db.getConnection(dbName, false).use {
                     // creating table in DB
                     val stmt = it.prepareStatement(it.nativeSQL(createTableQuery))
                     stmt.execute()

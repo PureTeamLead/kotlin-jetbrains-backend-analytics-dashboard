@@ -6,12 +6,12 @@ import java.sql.DriverManager
 
 @Component
 object DatabaseConnection : DatabaseConn {
-    override fun getConnection(dbName: String): Connection {
+    override fun getConnection(dbName: String, publicConn: Boolean): Connection {
         val conn = DriverManager.getConnection("jdbc:h2:mem:$dbName;DB_CLOSE_DELAY=-1")
 
         // to guarantee that queries wouldn't modify the data in database
         // gives a bit performance, since database will not be updated
-        conn.isReadOnly = true
+        conn.isReadOnly = publicConn
         return conn
     }
 }

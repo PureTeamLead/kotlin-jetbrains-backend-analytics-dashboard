@@ -36,7 +36,8 @@ class DataRepositoryImpl(
 
     @Throws(SQLException::class, SQLTimeoutException::class)
     override fun executeQuery(query: String): List<List<String>> {
-        val conn = db.getConnection(dbName)
+        // to not modify db table
+        val conn = db.getConnection(dbName, true)
         val metaData = conn.metaData
 
         val stmt = conn.prepareStatement(conn.nativeSQL(query))

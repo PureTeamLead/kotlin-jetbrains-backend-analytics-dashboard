@@ -1,7 +1,7 @@
 # Backend for main analytics dashboard
 
 > **_NOTE:_**  The solution is pretty straightforward and simple. It is non-production project.
-> Due to time restrictions performance is somehow poor.
+> Due to time restrictions performance is somehow poor. 
 
 ##  Requirements
 - JDK 21
@@ -29,9 +29,10 @@ docker build -t backend:1.0.0 .
 
 4. Run docker container
 ```bash
-docker run -p 8089:8089 backend:1.0.0
+docker run -it -p 8089:8089 backend:1.0.0
 ```
 
 ## Testing API with Postman
+> Do not share the link!
 
 [Postman Collection](https://api.postman.com/collections/40502373-9a3be043-726f-4080-be5b-6a02ad1adda8?access_key=PMAT-01K6BQF2KY9NDH93N2XS5CVJ08)
