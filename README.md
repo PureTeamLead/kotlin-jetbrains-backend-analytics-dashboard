@@ -36,3 +36,11 @@ docker run -it -p 8089:8089 backend:1.0.0
 > Do not share the link!
 
 [Postman Collection](https://api.postman.com/collections/40502373-9a3be043-726f-4080-be5b-6a02ad1adda8?access_key=PMAT-01K6BQF2KY9NDH93N2XS5CVJ08)
+
+---
+## Potential project improvements
+- Create an endpoint for **adding tables dynamically**. Something like POST /upload with file. 
+- Check the project with profiler to improve areas with poor performance(some are commented in the project)
+- Converting csv table into SQL is really easy now, but it should be improved. For instance, 
+all fields in the table are of TEXT type. Also table name should be set by client, for now it is static "entities".
+- Implement pagination for large responses. Also caching seems good fit into the project.
